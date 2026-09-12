@@ -1,130 +1,91 @@
-# Kirara - Luxury Skincare Website
+# Kirara
 
-A modern, elegant website for Kirara, a premium skincare brand specializing in sakura-infused body care products. Built with Next.js 15, React 19, and Tailwind CSS.
+Marketing site for **Kirara**, a body-care brand whose signature product is the
+Tone Brightening Lotion (green caviar extract, six-type ceramide, 100 ml).
 
-![Kirara Website Preview](public/kirara-lotion.jpeg)
+![Kirara Tone Brightening Lotion](public/kirara-lotion.jpeg)
 
-## 🌸 About Kirara
+## Stack
 
-Kirara offers luxury skincare products featuring the delicate fragrance and nourishing properties of cherry blossoms (sakura). Our signature body lotion combines natural moisturizers with authentic sakura extract to provide long-lasting hydration and an elegant, subtle scent.
+| | |
+| --- | --- |
+| Framework | Next.js 16 (App Router, React 19) |
+| Styling | Tailwind CSS v4 — CSS-first, no `tailwind.config.js` |
+| Components | [shadcn/ui](https://ui.shadcn.com) (Radix primitives, owned in `src/components/ui`) |
+| Icons | lucide-react |
+| Fonts | Playfair Display (display) + Inter (body), self-hosted via `next/font` |
+| Theming | `next-themes`, class strategy, light + dark |
+| Language | TypeScript |
+| Package manager | pnpm |
 
-### Product Features
-- **Deeply hydrating formula** - Provides long-lasting moisture
-- **Natural sakura extract** - Authentic Japanese cherry blossom ingredients
-- **Suitable for all skin types** - Gentle and non-irritating
-- **Elegant, long-lasting fragrance** - Subtle and sophisticated scent
+## Getting started
 
-## 🚀 Tech Stack
-
-- **Framework**: Next.js 15 (App Router)
-- **Frontend**: React 19
-- **Styling**: Tailwind CSS 4
-- **Language**: TypeScript
-- **Package Manager**: pnpm
-- **Linting**: ESLint
-
-## 📦 Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd kirara
-   ```
-
-2. **Install dependencies**
-   ```bash
-   pnpm install
-   ```
-
-3. **Run the development server**
-   ```bash
-   pnpm dev
-   ```
-
-4. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000) to view the website.
-
-## 🛠️ Available Scripts
-
-- `pnpm dev` - Start the development server
-- `pnpm build` - Build the application for production
-- `pnpm start` - Start the production server
-- `pnpm lint` - Run ESLint for code quality
-
-## 🎨 Design System
-
-The website features a carefully crafted design system with:
-
-### Color Palette
-- **Sakura Pink** (`#fbb1c8`) - Primary brand color
-- **Sakura Light** (`#ffe4ec`) - Light pink accents
-- **Sakura Dark** (`#e17b98`) - Darker pink for contrast
-- **Skin Light** (`#f8f5f2`) - Creamy off-white background
-- **Skin Warm** (`#f5e6d3`) - Warm tan accents
-
-### Typography
-- **Display Font**: Playfair Display (Vogue-style headings)
-- **Body Font**: Cormorant (Elegant body text)
-- **Sans Font**: Arial/Helvetica (Clean sans-serif)
-
-## 📁 Project Structure
-
-```
-kirara/
-├── public/                 # Static assets
-│   ├── kirara-lotion.jpeg  # Product image
-│   └── ...                 # Other assets
-├── src/
-│   └── app/               # Next.js App Router
-│       ├── layout.tsx     # Root layout
-│       ├── page.tsx       # Home page
-│       ├── globals.css    # Global styles
-│       └── favicon.ico    # Site favicon
-├── tailwind.config.js     # Tailwind configuration
-├── next.config.ts         # Next.js configuration
-├── package.json           # Dependencies and scripts
-└── README.md             # This file
-```
-
-## 🌟 Features
-
-- **Responsive Design** - Optimized for all device sizes
-- **Modern UI/UX** - Clean, elegant interface with luxury aesthetics
-- **Performance Optimized** - Built with Next.js for optimal loading speeds
-- **SEO Ready** - Proper meta tags and semantic HTML
-- **Accessibility** - WCAG compliant with proper ARIA labels
-
-## 🚀 Deployment
-
-This project can be deployed to various platforms:
-
-### Vercel (Recommended)
 ```bash
-pnpm build
-# Deploy to Vercel using their CLI or GitHub integration
+pnpm install
+pnpm dev          # http://localhost:3000
 ```
 
-### Other Platforms
-- **Netlify**: Connect your repository and build with `pnpm build`
-- **Railway**: Deploy directly from GitHub
-- **Docker**: Build and deploy as a container
+| Script | Purpose |
+| --- | --- |
+| `pnpm dev` | Development server |
+| `pnpm build` | Production build |
+| `pnpm start` | Serve the production build |
+| `pnpm lint` | ESLint (flat config) |
+| `pnpm typecheck` | `tsc --noEmit` |
 
-## 🤝 Contributing
+Set `NEXT_PUBLIC_SITE_URL` in the deployment so Open Graph URLs resolve
+absolutely; it falls back to `http://localhost:3000`.
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+## Project structure
 
-## 📄 License
+```
+src/
+├── app/
+│   ├── globals.css       # Design tokens, base layer, custom utilities
+│   ├── layout.tsx        # Fonts, metadata, theme provider
+│   └── page.tsx          # Composes the sections below
+├── components/
+│   ├── ui/               # shadcn/ui primitives (button, card, badge, …)
+│   ├── section.tsx       # Container / Section / SectionHeading / Eyebrow
+│   ├── site-header.tsx   # hero.tsx, benefits.tsx, ritual.tsx, faq.tsx,
+│   └── …                 # cta.tsx, site-footer.tsx, theme-toggle.tsx
+└── lib/
+    ├── site.ts           # All copy, links and product data
+    └── utils.ts          # `cn()` class merger
+```
 
-This project is private and proprietary. All rights reserved.
+Two rules keep the codebase small:
 
-## 📞 Contact
+- **Copy lives in `src/lib/site.ts`.** Section components render data; they do
+  not hard-code product text or URLs. Editing the brand means editing one file.
+- **Style lives in tokens.** Colours, radii, fonts and animations are CSS
+  variables in `src/app/globals.css`, exposed to Tailwind through
+  `@theme inline`. Components use token utilities (`bg-card`,
+  `text-muted-foreground`, `text-blossom-ink`), never raw hex values.
 
-For questions about this project, please contact the development team.
+## Design tokens
 
----
+The palette is defined in oklch on `:root` and overridden under `.dark`, using
+the shadcn token names plus two brand extras:
 
-**Kirara** - Nourish your skin with the gentle touch of sakura 🌸
+- `--blossom` — the sakura light source behind hero and CTA artwork.
+- `--blossom-ink` — the readable version of that pink, for type and icons.
+  Every text/background pair on the page clears WCAG AA in both themes.
+
+## Adding a shadcn component
+
+```bash
+pnpm dlx shadcn@latest add <component>
+```
+
+Components land in `src/components/ui` and are yours to edit — `button.tsx`, for
+example, has been adjusted to pill radii to match the brand.
+
+## Deployment
+
+Any Node host or static-friendly platform works; the site prerenders to static
+output. Vercel needs no configuration beyond `NEXT_PUBLIC_SITE_URL`.
+
+## Licence
+
+Private and proprietary. All rights reserved.

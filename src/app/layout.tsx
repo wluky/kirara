@@ -1,24 +1,65 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Inter, Playfair_Display } from "next/font/google";
+
+import { ThemeProvider } from "@/components/theme-provider";
+import { site } from "@/lib/site";
+
 import "./globals.css";
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Kirara - Luxury Skincare",
-  description: "Nourish your skin with the gentle touch of sakura. Premium body lotion with natural Japanese ingredients.",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
+  metadataBase: new URL(site.url),
+  title: {
+    default: `${site.name} — Luxury sakura skincare`,
+    template: `%s — ${site.name}`,
+  },
+  description: site.description,
+  openGraph: {
+    title: `${site.name} — Luxury sakura skincare`,
+    description: site.description,
+    type: "website",
+    images: [{ url: "/kirara-lotion.jpeg", width: 984, height: 1280 }],
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fdfbf8" },
+    { media: "(prefers-color-scheme: dark)", color: "#1c1917" },
+  ],
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-      </head>
-      <body className="antialiased overflow-x-hidden">
-        {children}
+    <html
+      lang="en"
+      className={`${inter.variable} ${playfair.variable} scroll-smooth`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-svh">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
