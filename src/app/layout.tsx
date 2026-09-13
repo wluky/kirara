@@ -20,13 +20,10 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: {
-    default: `${site.name} — Luxury sakura skincare`,
-    template: `%s — ${site.name}`,
-  },
+  title: site.title,
   description: site.description,
   openGraph: {
-    title: `${site.name} — Luxury sakura skincare`,
+    title: site.title,
     description: site.description,
     type: "website",
     images: [{ url: "/kirara-lotion.jpeg", width: 984, height: 1280 }],

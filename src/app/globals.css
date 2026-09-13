@@ -111,27 +111,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  --animate-accordion-down: accordion-down 0.25s ease-out;
-  --animate-accordion-up: accordion-up 0.25s ease-out;
   --animate-rise: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
-
-  @keyframes accordion-down {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-accordion-content-height);
-    }
-  }
-
-  @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-    to {
-      height: 0;
-    }
-  }
 
   @keyframes rise {
     from {
@@ -159,11 +139,6 @@
   ::selection {
     @apply bg-blossom/30;
   }
-}
-
-/* An editorial eyebrow: small, letter-spaced, always paired with a hairline. */
-@utility eyebrow {
-  @apply inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.22em] text-muted-foreground;
 }
 
 /* Soft blossom light source used behind hero and CTA artwork. */
