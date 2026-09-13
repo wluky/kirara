@@ -1,6 +1,6 @@
 import { Container, Rule } from "@/components/section";
 import { InstagramIcon } from "@/components/icons";
-import { site } from "@/lib/site";
+import { copyrightLine, site } from "@/lib/site";
 
 export function SiteFooter() {
   return (
@@ -22,7 +22,7 @@ export function SiteFooter() {
           {site.links.instagram.label}
         </a>
 
-        <p className="text-xs text-muted-foreground">{site.copyright}</p>
+        <p className="text-xs text-muted-foreground">{copyrightLine()}</p>
       </Container>
     </footer>
   );

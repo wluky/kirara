@@ -12,7 +12,8 @@ export const site = {
   title: "Kirara - Luxury Skincare",
   description:
     "Nourish your skin with the gentle touch of sakura. Premium body lotion with natural Japanese ingredients.",
-  copyright: "© 2025 Kirara. Crafted with elegance and care.",
+  /** Rendered by `copyrightLine()` below; the year is never stored as text. */
+  copyrightNotice: "Kirara. Crafted with elegance and care.",
   links: {
     shop: {
       label: "Shop Now",
@@ -24,6 +25,14 @@ export const site = {
     },
   },
 } as const;
+
+/**
+ * "© {year} Kirara. Crafted with elegance and care." with the year taken from
+ * the clock at render time, so it never has to be edited by hand.
+ */
+export function copyrightLine(now: Date = new Date()) {
+  return `© ${now.getFullYear()} ${site.copyrightNotice}`;
+}
 
 export const product = {
   name: "Signature Body Lotion",
